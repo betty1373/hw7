@@ -1,32 +1,28 @@
-#include "src/printip.h"
-using namespace printip;
+#include "inc/Logger.h"
+
 /// @file
 
 /// @brief Main function. Print Ip's from various types.
 /// @author btv<example@example.com>
-int main(int, char *[]) {
-   print_ip(char{-1});
-   std::cout<<std::endl;
-   
-   print_ip(short{0});
-   std::cout<<std::endl;
-
-   print_ip(int{2130706433});
-   std::cout<<std::endl;
-
-   print_ip(long{8875824491850138409});
-   std::cout<<std::endl;
-
-   print_ip(std::string{"Hello, world!"});
-   std::cout<< std::endl;
-
-   print_ip(std::vector<int>{100,200,300,400});
-   std::cout<<std::endl;
-
-   print_ip(std::list<short>{400,300,200,100});
-   std::cout<<std::endl;
-
-   print_ip(std::make_tuple(123,456,789,0));
-   std::cout<<std::endl;
+int main(int argc, char * argv[]) {
+   if (argc < 2) {
+      std::cerr<<"Use"<<argv[0]<<"<bulk_size>\n";
+      return EXIT_FAILURE;
+   }
+   size_t num = std::atoi(argv[1]);
+   if (num<=0) {
+       std::cerr<<"Bulk size must be greater than 0\n";
+      return EXIT_FAILURE;
+   }
+   auto cmdReader = CmdReader::Create(num);
+   auto consoleLogger = ConsoleLogger::Create(cmdReader);
+   auto fileLogger = FileLogger::Create(cmdReader);
+   try {
+      cmdReader->Work();
+   }
+   catch (std::runtime_error& e) {
+      std::cerr <<"Error :"<< e.what()<<std::endl;
+      return EXIT_FAILURE;
+   }
    return 0;
 }  
