@@ -1,7 +1,0 @@
-[
-{
-  "directory": "/home/btv/hw7/build",
-  "command": "/usr/bin/g++-9    -g   -Wall -Wextra -pedantic -std=gnu++17 -o CMakeFiles/bulk.dir/main.cpp.o -c /home/btv/hw7/main.cpp",
-  "file": "/home/btv/hw7/main.cpp"
-}
-]
