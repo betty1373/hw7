@@ -1,8 +1,7 @@
 #include "inc/Logger.h"
 
 /// @file
-
-/// @brief Main function. Print Ip's from various types.
+/// @brief Main function. Test for processing commands.
 /// @author btv<example@example.com>
 int main(int argc, char * argv[]) {
    if (argc < 2) {

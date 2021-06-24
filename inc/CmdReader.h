@@ -7,9 +7,12 @@
 #include <chrono>
 #include "Observer.h"
 #include <thread>
-
+/// @file
+/// @brief Class for reading commands from input stream, processing their and notifying subscribers.
+/// @author btv<example@example.com>
 class CmdReader : public Observable {
 public:
+/// @brief Create object class - PatternCreater
     static std::shared_ptr<CmdReader> Create(const size_t num_cmds,std::istream& istream=std::cin) {
         auto ptr = std::shared_ptr<CmdReader>{ new CmdReader{num_cmds,istream}};
         return ptr;
@@ -17,6 +20,7 @@ public:
     virtual ~CmdReader() {
         std::cout<<"Destroy CmdReader"<<std::endl;
     };
+/// @brief Adds subscribers to list
     void Subscribe(const std::shared_ptr<Observer>& obs) override {
         m_observers.emplace_back(obs);
     }
@@ -36,7 +40,7 @@ public:
     //     std::cout<<"Unsubscribe ConsoleLogger"<<std::endl;
     //     std::cout<<m_observers.size()<<std::endl;
     // }
-    
+/// @brief Notifies subscribers and sends batch of cmds to their   
     void Notify() override {
         if (m_cmds.empty()) return;   
         
@@ -51,6 +55,7 @@ public:
         }
         m_cmds.resize(0);
     };
+/// @brief Reads cmds from input stream and processes their and inform subscribers
     void Work() {
         m_cmds.reserve(m_num_cmds);
         std::string cmd;
@@ -81,10 +86,12 @@ public:
         if ((cnt_braces==0) && !m_cmds.empty()) Notify();
     };
 private:
+/// @brief Private Constructor
     CmdReader(const size_t num_cmds,std::istream& istream=std::cin) 
         : m_num_cmds(num_cmds),
           m_istream(istream)   {};
-    
+
+/// @brief Forms batch to stringstream
     std::stringstream FormBatch() {
         std::stringstream ss;
         for (auto it_cmd = m_cmds.cbegin();it_cmd!=m_cmds.cend();it_cmd++) {

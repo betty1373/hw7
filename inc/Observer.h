@@ -2,7 +2,9 @@
 #define Observer_H
 #include <sstream>
 #include <memory>
-
+/// @file
+/// @brief Abstract Interfaces for ObserverPattern
+/// @author btv<example@example.com>
 class Observer {
  public: 
     virtual ~Observer(){};  
